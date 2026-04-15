@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#1a0a2e"/>
+  <title>Happy Birthday Guddu 🎂</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <audio id="bgMusic" loop autoplay muted><source src="music.mp3" type="audio/mpeg"/></audio>
+  <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">🎵</button>
+
+  <!-- Progress dots -->
+  <div id="progressDots">
+    <span class="dot active" data-step="0"></span>
+    <span class="dot" data-step="1"></span>
+    <span class="dot" data-step="2"></span>
+    <span class="dot" data-step="3"></span>
+    <span class="dot" data-step="4"></span>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FIXED BACKGROUND (never moves)
+  ══════════════════════════════════════ -->
+  <div id="bgFixed">
+    <img src="bg.svg" id="bgImg" alt="Candy World"/>
+    <canvas id="candyCanvas"></canvas>
+    <!-- Candy rain -->
+    <div id="candyRain"></div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SCENE — this is what moves UP/DOWN
+       instead of the browser scrolling
+  ══════════════════════════════════════ -->
+  <div id="scene">
+
+    <!-- SLIDE 0: HERO -->
+    <div class="slide" id="slide0">
+      <div class="hero-content">
+        <span class="hero-sub">✨ A Special Surprise ✨</span>
+        <h1 class="birthday-title">
+          <span class="line1">Happy Birthday</span>
+          <span class="line2">Guddu</span>
+        </h1>
+        <div class="age-badge"><span class="age-num">2</span><span class="age-word">Today!</span></div>
+        <p class="scroll-hint"><span>🎁</span> Scroll for a surprise <span class="arr">↓</span></p>
+      </div>
+    </div>
+
+    <!-- SLIDE 1: Book closed + rising -->
+    <div class="slide" id="slide1">
+      <div class="book-stage">
+        <div class="book" id="theBook">
+          <div class="book-spine"></div>
+          <div class="book-back"></div>
+
+          <!-- Pages (hidden behind cover) -->
+          <div class="book-page" id="page1">
+            <div class="pg-inner">
+              <div class="pg-head"><span class="pg-emoji">👶</span><h2>The Day You Arrived</h2><p class="pg-date">April 19, 2024 🌸</p></div>
+              <div class="photo-grid">
+                <div class="photo-frame tilt-l"><img src="photos/birth1.jpg" alt="" onerror="this.src=''/><span class="plabel">First breath 💕</span></div>
+                <div class="photo-frame tilt-r mt"><img src="photos/birth2.jpg" alt="" onerror="this.src=''"/><span class="plabel">So tiny 🌸</span></div>
+                <div class="photo-frame tilt-l"><img src="photos/birth3.jpg" alt="" onerror="this.src=''"/><span class="plabel">Pure love 🥰</span></div>
+              </div>
+              <div class="msg-box">
+                <p>The moment you came into this world, Guddu, everything changed. The universe smiled a little brighter, and our hearts grew a little bigger. You were the tiniest miracle — with the loudest cry and the softest cheeks. Even though Chachu couldn't hold you that day, <strong class="hl-pink">every heartbeat of mine was celebrating you.</strong> 💖</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="book-page" id="page2">
+            <div class="pg-inner">
+              <div class="pg-head"><span class="pg-emoji">🎂</span><h2>Your First Birthday</h2><p class="pg-date">April 19, 2025 🎊</p></div>
+              <div class="photo-grid">
+                <div class="photo-frame tilt-r"><img src="photos/bday1_1.jpg" alt="" onerror="this.src=''"/><span class="plabel">Cake time! 🎂</span></div>
+                <div class="photo-frame tilt-l mt"><img src="photos/bday1_2.jpg" alt="" onerror="this.src=''"/><span class="plabel">My little star ⭐</span></div>
+                <div class="photo-frame tilt-r"><img src="photos/bday1_3.jpg" alt="" onerror="this.src=''"/><span class="plabel">Growing up 🌻</span></div>
+              </div>
+              <div class="msg-box msg-mint">
+                <p>One whole year, Guddu! One year of your first giggles, your wobbly first steps, your tiny fingers discovering the whole world. Chachu watched every video, every photo, with tears of pure joy. Distance is just miles — but love has no distance. <strong class="hl-mint">You are the best thing that happened to our family. 🌈</strong> I hope that cake was as sweet as you are, my jaan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="book-page page3" id="page3">
+            <div class="pg-inner">
+              <div class="confetti-zone" id="confettiZone"></div>
+              <div class="pg-head"><span class="pg-emoji spin-e">🎉</span><h2>Happy 2nd Birthday!</h2><p class="pg-date">April 19, 2026 — Today! 🎊</p></div>
+              <div class="wish-card">
+                <div class="wish-stars">⭐ ✨ 🌟 ✨ ⭐</div>
+                <p class="big-wish">TWO years of magic, laughter &amp; love!</p>
+                <p class="wish-body">Guddu, you are 2 today and already the most wonderful little human. Chachu couldn't be there in person, but <strong class="hl-gold">I am there in every smile you smile, every dream you dream.</strong> This little website is my hug to you from far away. 🤗</p>
+                <p class="wish-body">May your life be filled with candy clouds, endless laughter, and all the love in the world. You are my favourite person on this entire planet, little one.</p>
+                <div class="sign">— With all my love,<br/><span class="sign-name">Chachu 💛</span></div>
+              </div>
+              <div class="cake-wrap">
+                <div class="cake-big">🎂</div>
+                <div class="candles">🕯️ 🕯️</div>
+                <p class="blow">Make a wish, Guddu! 🌟</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Front cover -->
+          <div class="book-cover" id="bookCover">
+            <div class="cover-inner">
+              <span class="cover-icon">📖</span>
+              <h3>A Little Book<br/>of Love</h3>
+              <p>For Guddu</p>
+              <p class="cover-age">Turning 2 💕</p>
+            </div>
+          </div>
+        </div><!-- /book -->
+      </div>
+    </div>
+
+  </div><!-- /scene -->
+
+  <script src="candy-world.js"></script>
+  <script src="book.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

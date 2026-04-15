@@ -1,0 +1,399 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- Sky gradient: deep twilight purple to warm candy horizon -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0d0520"/>
+      <stop offset="18%"  stop-color="#1e0840"/>
+      <stop offset="40%"  stop-color="#3d1278"/>
+      <stop offset="65%"  stop-color="#7a2fb0"/>
+      <stop offset="82%"  stop-color="#c060d8"/>
+      <stop offset="100%" stop-color="#ff9fe8"/>
+    </linearGradient>
+
+    <!-- Ground gradient -->
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#ff85d0"/>
+      <stop offset="40%" stop-color="#e050b0"/>
+      <stop offset="100%" stop-color="#8020a0"/>
+    </linearGradient>
+
+    <!-- Candy shine radial -->
+    <radialGradient id="shine_pink" cx="30%" cy="25%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#ffb3e0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#cc3388" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="shine_yellow" cx="30%" cy="25%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#fff3a0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#cc9900" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="shine_mint" cx="30%" cy="25%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#a0ffe0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#00aa77" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="shine_blue" cx="30%" cy="25%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#a0d8ff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#0066cc" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="shine_purple" cx="30%" cy="25%" r="70%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#d4a0ff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#7700cc" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Moon glow -->
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#fff8e0" stop-opacity="1"/>
+      <stop offset="60%" stop-color="#ffe0a0" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ff9fe8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Cloud gradient -->
+    <radialGradient id="cloud1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#ffd6f0" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ff80cc" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#00000055"/>
+    </filter>
+    <filter id="glow_pink" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow_soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="deepShadow">
+      <feDropShadow dx="4" dy="16" stdDeviation="20" flood-color="#1a003366"/>
+    </filter>
+  </defs>
+
+  <!-- ═══ SKY ═══ -->
+  <rect width="1080" height="1920" fill="url(#sky)"/>
+
+  <!-- ═══ MOON HALO ═══ -->
+  <circle cx="540" cy="260" r="220" fill="url(#moonGlow)" opacity="0.5"/>
+  <!-- Moon -->
+  <circle cx="540" cy="260" r="90" fill="#fff8e0" filter="url(#glow_soft)"/>
+  <circle cx="540" cy="260" r="88" fill="#ffe8a0"/>
+  <!-- Moon craters -->
+  <circle cx="510" cy="240" r="12" fill="#f0d080" opacity="0.6"/>
+  <circle cx="558" cy="275" r="8"  fill="#f0d080" opacity="0.5"/>
+  <circle cx="530" cy="290" r="6"  fill="#f0d080" opacity="0.4"/>
+
+  <!-- ═══ STARS ═══ -->
+  <!-- Far stars (tiny) -->
+  <g opacity="0.8" fill="white">
+    <circle cx="80"  cy="80"  r="1.5"/><circle cx="200" cy="50"  r="1"/>
+    <circle cx="350" cy="110" r="1.5"/><circle cx="480" cy="40"  r="1"/>
+    <circle cx="620" cy="90"  r="1.5"/><circle cx="750" cy="60"  r="1"/>
+    <circle cx="900" cy="100" r="1.5"/><circle cx="1000" cy="45" r="1"/>
+    <circle cx="150" cy="160" r="1"/> <circle cx="300" cy="200" r="1.5"/>
+    <circle cx="700" cy="150" r="1"/> <circle cx="850" cy="180" r="1.5"/>
+    <circle cx="960" cy="140" r="1"/> <circle cx="60"  cy="220" r="1.5"/>
+    <circle cx="420" cy="180" r="1"/> <circle cx="1020" cy="200" r="1.5"/>
+  </g>
+  <!-- Bright sparkle stars -->
+  <g fill="#ffe066" filter="url(#glow_soft)">
+    <polygon points="120,120 124,132 136,132 126,140 130,152 120,144 110,152 114,140 104,132 116,132" opacity="0.9" transform="scale(0.5) translate(120,80)"/>
+    <polygon points="840,80 844,92 856,92 846,100 850,112 840,104 830,112 834,100 824,92 836,92" opacity="0.8" transform="scale(0.6) translate(560,60)"/>
+    <polygon points="960,180 964,192 976,192 966,200 970,212 960,204 950,212 954,200 944,192 956,192" opacity="0.7" transform="scale(0.45) translate(1100,200)"/>
+  </g>
+
+  <!-- ═══ CANDY CLOUDS ═══ -->
+  <!-- Cloud 1 left -->
+  <g opacity="0.75" filter="url(#glow_soft)">
+    <ellipse cx="140" cy="460" rx="130" ry="55" fill="#ffd0f0"/>
+    <ellipse cx="90"  cy="475" rx="80"  ry="45" fill="#ffb8e8"/>
+    <ellipse cx="190" cy="470" rx="90"  ry="42" fill="#ffc8ec"/>
+    <ellipse cx="140" cy="450" rx="100" ry="38" fill="#ffe0f8"/>
+  </g>
+  <!-- Cloud 2 right -->
+  <g opacity="0.7" filter="url(#glow_soft)">
+    <ellipse cx="940" cy="400" rx="150" ry="60" fill="#d0e8ff"/>
+    <ellipse cx="880" cy="415" rx="90"  ry="45" fill="#b8d8ff"/>
+    <ellipse cx="1000" cy="410" rx="100" ry="42" fill="#c8dcff"/>
+    <ellipse cx="940" cy="390" rx="120" ry="40" fill="#e0f0ff"/>
+  </g>
+  <!-- Cloud 3 center top -->
+  <g opacity="0.55">
+    <ellipse cx="540" cy="380" rx="200" ry="50" fill="#ffe0ff"/>
+    <ellipse cx="460" cy="395" rx="110" ry="40" fill="#ffd0f8"/>
+    <ellipse cx="620" cy="390" rx="120" ry="38" fill="#f0d0ff"/>
+  </g>
+
+  <!-- ═══ RAINBOW ARC ═══ -->
+  <g opacity="0.22">
+    <path d="M -80 1100 A 640 640 0 0 1 1160 1100" fill="none" stroke="#ff4466" stroke-width="28"/>
+    <path d="M -60 1100 A 620 620 0 0 1 1140 1100" fill="none" stroke="#ff8800" stroke-width="26"/>
+    <path d="M -40 1100 A 600 600 0 0 1 1120 1100" fill="none" stroke="#ffe000" stroke-width="24"/>
+    <path d="M -20 1100 A 580 580 0 0 1 1100 1100" fill="none" stroke="#44cc44" stroke-width="22"/>
+    <path d="M   0 1100 A 560 560 0 0 1 1080 1100" fill="none" stroke="#2299ff" stroke-width="20"/>
+    <path d="M  20 1100 A 540 540 0 0 1 1060 1100" fill="none" stroke="#aa44ff" stroke-width="18"/>
+  </g>
+
+  <!-- ═══ BACKGROUND HILLS (far, desaturated) ═══ -->
+  <ellipse cx="200" cy="1320" rx="380" ry="180" fill="#c040b0" opacity="0.45"/>
+  <ellipse cx="880" cy="1340" rx="340" ry="160" fill="#9030a0" opacity="0.4"/>
+  <ellipse cx="540" cy="1360" rx="500" ry="200" fill="#b050c0" opacity="0.35"/>
+
+  <!-- ═══ MID HILLS ═══ -->
+  <path d="M0 1440 Q180 1280 360 1380 Q540 1480 720 1320 Q900 1160 1080 1380 L1080 1920 L0 1920Z"
+        fill="#d060c8" opacity="0.6"/>
+  <path d="M0 1500 Q200 1360 400 1440 Q600 1520 800 1380 Q1000 1240 1080 1440 L1080 1920 L0 1920Z"
+        fill="#e070c0" opacity="0.55"/>
+
+  <!-- ═══ FOREGROUND GROUND ═══ -->
+  <path d="M0 1580 Q120 1520 260 1560 Q400 1600 540 1540 Q680 1480 820 1560 Q960 1640 1080 1580 L1080 1920 L0 1920Z"
+        fill="url(#ground)"/>
+
+  <!-- ═══ LOLLIPOP FOREST ═══ (3D depth — back to front) ═══ -->
+
+  <!-- Back row (small, desaturated) -->
+  <!-- Lollipop B1 -->
+  <g opacity="0.55" transform="translate(80,1380) scale(0.55)">
+    <rect x="-6" y="0" width="12" height="180" rx="6" fill="#e0a0c0"/>
+    <rect x="-6" y="0" width="12" height="180" rx="6" fill="none" stroke="#cc80a8" stroke-width="2"/>
+    <circle cx="0" cy="0" r="55" fill="url(#shine_pink)" filter="url(#shadow)"/>
+    <path d="M-20,-20 Q0,-40 20,-20 Q40,0 20,20 Q0,40 -20,20 Q-40,0 -20,-20Z" fill="white" opacity="0.15"/>
+  </g>
+  <!-- Lollipop B2 -->
+  <g opacity="0.5" transform="translate(280,1340) scale(0.5)">
+    <rect x="-6" y="0" width="12" height="200" rx="6" fill="#d0c080"/>
+    <circle cx="0" cy="0" r="55" fill="url(#shine_yellow)" filter="url(#shadow)"/>
+    <path d="M-20,-20 Q0,-40 20,-20 Q40,0 20,20 Q0,40 -20,20 Q-40,0 -20,-20Z" fill="white" opacity="0.15"/>
+  </g>
+  <!-- Lollipop B3 -->
+  <g opacity="0.5" transform="translate(800,1350) scale(0.52)">
+    <rect x="-6" y="0" width="12" height="190" rx="6" fill="#80c0b0"/>
+    <circle cx="0" cy="0" r="55" fill="url(#shine_mint)" filter="url(#shadow)"/>
+    <path d="M-20,-20 Q0,-40 20,-20 Q40,0 20,20 Q0,40 -20,20 Q-40,0 -20,-20Z" fill="white" opacity="0.15"/>
+  </g>
+  <!-- Lollipop B4 -->
+  <g opacity="0.48" transform="translate(1000,1360) scale(0.48)">
+    <rect x="-6" y="0" width="12" height="185" rx="6" fill="#a090c0"/>
+    <circle cx="0" cy="0" r="55" fill="url(#shine_purple)" filter="url(#shadow)"/>
+    <path d="M-20,-20 Q0,-40 20,-20 Q40,0 20,20 Q0,40 -20,20 Q-40,0 -20,-20Z" fill="white" opacity="0.15"/>
+  </g>
+
+  <!-- Mid row (medium) -->
+  <!-- Lollipop M1 — striped pink -->
+  <g filter="url(#deepShadow)" transform="translate(160,1460) scale(0.75)">
+    <rect x="-8" y="0" width="16" height="220" rx="8" fill="#f070b0"/>
+    <rect x="-8" y="0" width="16" height="220" rx="8" fill="none" stroke="#cc4488" stroke-width="3"/>
+    <circle cx="0" cy="0" r="72" fill="url(#shine_pink)"/>
+    <!-- Swirl stripes -->
+    <path d="M0,-72 Q36,-36 72,0 Q36,36 0,72 Q-36,36 -72,0 Q-36,-36 0,-72Z" fill="none" stroke="white" stroke-width="8" stroke-dasharray="18 10" opacity="0.5"/>
+    <circle cx="0" cy="0" r="72" fill="none" stroke="white" stroke-width="3" opacity="0.2"/>
+    <circle cx="-20" cy="-22" r="16" fill="white" opacity="0.25"/>
+  </g>
+  <!-- Lollipop M2 — blue -->
+  <g filter="url(#deepShadow)" transform="translate(480,1420) scale(0.7)">
+    <rect x="-8" y="0" width="16" height="210" rx="8" fill="#60a8e8"/>
+    <circle cx="0" cy="0" r="72" fill="url(#shine_blue)"/>
+    <path d="M0,-72 Q36,-36 72,0 Q36,36 0,72 Q-36,36 -72,0 Q-36,-36 0,-72Z" fill="none" stroke="white" stroke-width="8" stroke-dasharray="18 10" opacity="0.4"/>
+    <circle cx="-20" cy="-22" r="16" fill="white" opacity="0.25"/>
+  </g>
+  <!-- Lollipop M3 — yellow -->
+  <g filter="url(#deepShadow)" transform="translate(750,1440) scale(0.72)">
+    <rect x="-8" y="0" width="16" height="215" rx="8" fill="#e8c840"/>
+    <circle cx="0" cy="0" r="72" fill="url(#shine_yellow)"/>
+    <path d="M0,-72 Q36,-36 72,0 Q36,36 0,72 Q-36,36 -72,0 Q-36,-36 0,-72Z" fill="none" stroke="white" stroke-width="8" stroke-dasharray="18 10" opacity="0.4"/>
+    <circle cx="-20" cy="-22" r="16" fill="white" opacity="0.25"/>
+  </g>
+
+  <!-- Front row (large, vivid) -->
+  <!-- Giant Lollipop LEFT -->
+  <g filter="url(#deepShadow)" transform="translate(0,1560) scale(1.0)">
+    <rect x="-10" y="0" width="20" height="320" rx="10" fill="#ff60a8"/>
+    <rect x="-10" y="0" width="20" height="320" rx="10" fill="none" stroke="#cc3080" stroke-width="4"/>
+    <circle cx="0" cy="0" r="105" fill="url(#shine_pink)" filter="url(#glow_pink)"/>
+    <!-- Multi-layer swirl -->
+    <path d="M0,-105 C55,-105 105,-55 105,0 C105,55 55,105 0,105 C-55,105 -105,55 -105,0 C-105,-55 -55,-105 0,-105Z"
+          fill="none" stroke="white" stroke-width="12" stroke-dasharray="25 14" opacity="0.45"/>
+    <path d="M0,-70 C36,-70 70,-36 70,0 C70,36 36,70 0,70 C-36,70 -70,36 -70,0 C-70,-36 -36,-70 0,-70Z"
+          fill="none" stroke="white" stroke-width="8" stroke-dasharray="18 10" opacity="0.3"/>
+    <ellipse cx="-28" cy="-30" rx="22" ry="16" fill="white" opacity="0.3" transform="rotate(-30,-28,-30)"/>
+    <!-- Shadow under ball -->
+    <ellipse cx="0" cy="110" rx="80" ry="18" fill="#00000030"/>
+  </g>
+
+  <!-- Giant Lollipop RIGHT -->
+  <g filter="url(#deepShadow)" transform="translate(1080,1540) scale(1.0)">
+    <rect x="-10" y="0" width="20" height="300" rx="10" fill="#60c8e8"/>
+    <rect x="-10" y="0" width="20" height="300" rx="10" fill="none" stroke="#3090c0" stroke-width="4"/>
+    <circle cx="0" cy="0" r="100" fill="url(#shine_blue)" filter="url(#glow_soft)"/>
+    <path d="M0,-100 C52,-100 100,-52 100,0 C100,52 52,100 0,100 C-52,100 -100,52 -100,0 C-100,-52 -52,-100 0,-100Z"
+          fill="none" stroke="white" stroke-width="12" stroke-dasharray="25 14" opacity="0.4"/>
+    <ellipse cx="-26" cy="-28" rx="20" ry="15" fill="white" opacity="0.3" transform="rotate(-30,-26,-28)"/>
+    <ellipse cx="0" cy="106" rx="75" ry="16" fill="#00000030"/>
+  </g>
+
+  <!-- Center giant lollipop -->
+  <g filter="url(#deepShadow)" transform="translate(540,1500) scale(1.1)">
+    <rect x="-11" y="0" width="22" height="350" rx="11" fill="#c060e0"/>
+    <rect x="-11" y="0" width="22" height="350" rx="11" fill="none" stroke="#9030b0" stroke-width="4"/>
+    <circle cx="0" cy="0" r="115" fill="url(#shine_purple)" filter="url(#glow_pink)"/>
+    <path d="M0,-115 C60,-115 115,-60 115,0 C115,60 60,115 0,115 C-60,115 -115,60 -115,0 C-115,-60 -60,-115 0,-115Z"
+          fill="none" stroke="white" stroke-width="14" stroke-dasharray="28 16" opacity="0.45"/>
+    <path d="M0,-75 C39,-75 75,-39 75,0 C75,39 39,75 0,75 C-39,75 -75,39 -75,0 C-75,-39 -39,-75 0,-75Z"
+          fill="none" stroke="white" stroke-width="8" stroke-dasharray="18 10" opacity="0.3"/>
+    <ellipse cx="-32" cy="-34" rx="25" ry="18" fill="white" opacity="0.32" transform="rotate(-30,-32,-34)"/>
+    <ellipse cx="0" cy="122" rx="90" ry="20" fill="#00000030"/>
+  </g>
+
+  <!-- ═══ CANDY PATH / ROAD ═══ -->
+  <path d="M0,1750 Q540,1700 1080,1750 L1080,1920 L0,1920Z" fill="#e060b8" opacity="0.4"/>
+  <!-- Path stones (candy) -->
+  <g opacity="0.7">
+    <ellipse cx="180" cy="1820" rx="38" ry="18" fill="#ff80c8" transform="rotate(-8,180,1820)"/>
+    <ellipse cx="320" cy="1800" rx="35" ry="16" fill="#ffe060" transform="rotate(5,320,1800)"/>
+    <ellipse cx="460" cy="1815" rx="40" ry="17" fill="#80e8c0" transform="rotate(-3,460,1815)"/>
+    <ellipse cx="600" cy="1798" rx="36" ry="16" fill="#c080ff" transform="rotate(7,600,1798)"/>
+    <ellipse cx="740" cy="1812" rx="38" ry="18" fill="#ff9060" transform="rotate(-5,740,1812)"/>
+    <ellipse cx="880" cy="1800" rx="35" ry="16" fill="#60c8ff" transform="rotate(4,880,1800)"/>
+  </g>
+
+  <!-- ═══ CANDY HOUSE ═══ -->
+  <!-- House body -->
+  <rect x="360" y="1420" width="360" height="260" rx="10" fill="#ff90c8" filter="url(#shadow)"/>
+  <rect x="360" y="1420" width="360" height="260" rx="10" fill="none" stroke="#ff60a0" stroke-width="4"/>
+  <!-- Frosting on house walls -->
+  <path d="M360,1430 Q380,1415 400,1430 Q420,1445 440,1430 Q460,1415 480,1430 Q500,1445 520,1430 Q540,1415 560,1430 Q580,1445 600,1430 Q620,1415 640,1430 Q660,1445 680,1430 Q700,1415 720,1430"
+        fill="none" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <!-- Roof -->
+  <polygon points="330,1430 540,1310 750,1430" fill="#e040a0" filter="url(#shadow)"/>
+  <polygon points="330,1430 540,1310 750,1430" fill="none" stroke="#c02080" stroke-width="4"/>
+  <!-- Roof frosting -->
+  <path d="M330,1430 Q355,1412 380,1430 Q405,1448 430,1430 Q455,1412 480,1430 Q505,1448 530,1430 Q555,1412 580,1430 Q605,1448 630,1430 Q655,1412 680,1430 Q705,1448 730,1430 Q750,1418 750,1430"
+        fill="none" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+  <!-- Chimney -->
+  <rect x="620" y="1320" width="50" height="80" rx="5" fill="#cc3090"/>
+  <rect x="610" y="1315" width="70" height="18" rx="4" fill="#e040a8"/>
+  <!-- Smoke puff -->
+  <circle cx="645" cy="1295" r="18" fill="#ffd8f8" opacity="0.55"/>
+  <circle cx="658" cy="1278" r="14" fill="#ffd8f8" opacity="0.45"/>
+  <circle cx="648" cy="1260" r="10" fill="#ffd8f8" opacity="0.35"/>
+  <!-- Door -->
+  <rect x="470" y="1570" width="100" height="110" rx="50 50 0 0" fill="#ffe060"/>
+  <rect x="470" y="1570" width="100" height="110" rx="50 50 0 0" fill="none" stroke="#cc9900" stroke-width="3"/>
+  <circle cx="562" cy="1625" r="6" fill="#cc7700"/>
+  <!-- Windows -->
+  <rect x="390" y="1480" width="80" height="70" rx="8" fill="#a0e8ff"/>
+  <rect x="390" y="1480" width="80" height="70" rx="8" fill="none" stroke="#60b8e0" stroke-width="3"/>
+  <line x1="430" y1="1480" x2="430" y2="1550" stroke="#60b8e0" stroke-width="2"/>
+  <line x1="390" y1="1515" x2="470" y2="1515" stroke="#60b8e0" stroke-width="2"/>
+  <rect x="610" y="1480" width="80" height="70" rx="8" fill="#ffd080"/>
+  <rect x="610" y="1480" width="80" height="70" rx="8" fill="none" stroke="#cc9900" stroke-width="3"/>
+  <line x1="650" y1="1480" x2="650" y2="1550" stroke="#cc9900" stroke-width="2"/>
+  <line x1="610" y1="1515" x2="690" y2="1515" stroke="#cc9900" stroke-width="2"/>
+
+  <!-- ═══ CANDY TREES ═══ -->
+  <!-- Tree left -->
+  <g transform="translate(120,1480)">
+    <rect x="-8" y="100" width="16" height="100" fill="#c06030"/>
+    <!-- Layers top to bottom bigger -->
+    <polygon points="0,-80 -70,20 70,20" fill="#44cc88"/>
+    <polygon points="0,-50 -85,30 85,30" fill="#33bb77"/>
+    <polygon points="0,-20 -100,50 100,50" fill="#22aa66"/>
+    <!-- Candy ornaments -->
+    <circle cx="-45" cy="10" r="10" fill="#ff6eb4" filter="url(#glow_soft)"/>
+    <circle cx="50"  cy="5"  r="9"  fill="#ffe066" filter="url(#glow_soft)"/>
+    <circle cx="10"  cy="25" r="8"  fill="#60c5fa" filter="url(#glow_soft)"/>
+    <circle cx="-30" cy="35" r="7"  fill="#c084fc" filter="url(#glow_soft)"/>
+    <!-- Star top -->
+    <polygon points="0,-92 4,-82 14,-82 6,-75 10,-65 0,-72 -10,-65 -6,-75 -14,-82 -4,-82" fill="#ffe066" filter="url(#glow_soft)"/>
+  </g>
+  <!-- Tree right -->
+  <g transform="translate(960,1500)">
+    <rect x="-8" y="100" width="16" height="100" fill="#c06030"/>
+    <polygon points="0,-80 -70,20 70,20" fill="#55dd99"/>
+    <polygon points="0,-50 -85,30 85,30" fill="#44cc88"/>
+    <polygon points="0,-20 -100,50 100,50" fill="#33bb77"/>
+    <circle cx="45"  cy="10" r="10" fill="#ff5e7e" filter="url(#glow_soft)"/>
+    <circle cx="-50" cy="5"  r="9"  fill="#c084fc" filter="url(#glow_soft)"/>
+    <circle cx="-10" cy="25" r="8"  fill="#ffe066" filter="url(#glow_soft)"/>
+    <circle cx="30"  cy="35" r="7"  fill="#6ee7c4" filter="url(#glow_soft)"/>
+    <polygon points="0,-92 4,-82 14,-82 6,-75 10,-65 0,-72 -10,-65 -6,-75 -14,-82 -4,-82" fill="#ff80c0" filter="url(#glow_soft)"/>
+  </g>
+
+  <!-- ═══ FLOATING CANDY PARTICLES ═══ -->
+  <g opacity="0.65" filter="url(#glow_soft)">
+    <!-- Candy canes tilted -->
+    <g transform="translate(200,650) rotate(30)">
+      <rect x="-8" y="-50" width="16" height="100" rx="8" fill="white"/>
+      <path d="M-8,-50 Q8,-80 8,-50" fill="none" stroke="#ff4466" stroke-width="8" stroke-linecap="round"/>
+      <g stroke="#ff4466" stroke-width="8">
+        <line x1="-8" y1="-30" x2="8" y2="-30"/>
+        <line x1="-8" y1="-10" x2="8" y2="-10"/>
+        <line x1="-8" y1="10"  x2="8" y2="10"/>
+        <line x1="-8" y1="30"  x2="8" y2="30"/>
+      </g>
+    </g>
+    <!-- Candy cane right -->
+    <g transform="translate(880,720) rotate(-25)">
+      <rect x="-8" y="-50" width="16" height="100" rx="8" fill="white"/>
+      <path d="M-8,-50 Q8,-80 8,-50" fill="none" stroke="#4488ff" stroke-width="8" stroke-linecap="round"/>
+      <g stroke="#4488ff" stroke-width="8">
+        <line x1="-8" y1="-30" x2="8" y2="-30"/>
+        <line x1="-8" y1="-10" x2="8" y2="-10"/>
+        <line x1="-8" y1="10"  x2="8" y2="10"/>
+        <line x1="-8" y1="30"  x2="8" y2="30"/>
+      </g>
+    </g>
+    <!-- Gummy bears (circles with faces) -->
+    <g transform="translate(720,580)">
+      <ellipse cx="0" cy="0" rx="28" ry="32" fill="#ff6eb4"/>
+      <!-- ears -->
+      <circle cx="-16" cy="-24" r="9" fill="#ff6eb4"/>
+      <circle cx="16"  cy="-24" r="9" fill="#ff6eb4"/>
+      <!-- face -->
+      <circle cx="-9" cy="-4" r="4" fill="#cc3088"/>
+      <circle cx="9"  cy="-4" r="4" fill="#cc3088"/>
+      <path d="M-8,8 Q0,16 8,8" fill="none" stroke="#cc3088" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="0" cy="0" rx="28" ry="32" fill="none" stroke="white" stroke-width="2" opacity="0.3"/>
+    </g>
+    <g transform="translate(340,700)">
+      <ellipse cx="0" cy="0" rx="28" ry="32" fill="#ffe066"/>
+      <circle cx="-16" cy="-24" r="9" fill="#ffe066"/>
+      <circle cx="16"  cy="-24" r="9" fill="#ffe066"/>
+      <circle cx="-9" cy="-4" r="4" fill="#cc9900"/>
+      <circle cx="9"  cy="-4" r="4" fill="#cc9900"/>
+      <path d="M-8,8 Q0,16 8,8" fill="none" stroke="#cc9900" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- Star candy -->
+    <polygon points="540,600 548,624 574,624 554,638 562,662 540,648 518,662 526,638 506,624 532,624"
+             fill="#ffe066" filter="url(#glow_pink)" opacity="0.9"/>
+    <!-- Heart candy -->
+    <path d="M760,820 C760,810 775,800 785,810 C795,800 810,810 810,820 C810,840 785,860 785,860 C785,860 760,840 760,820Z"
+          fill="#ff5e7e" filter="url(#glow_soft)"/>
+    <!-- Gem candy -->
+    <polygon points="150,820 185,800 220,820 220,860 185,880 150,860" fill="#60c5fa" opacity="0.8" filter="url(#glow_soft)"/>
+    <polygon points="150,820 185,800 220,820 185,830" fill="white" opacity="0.3"/>
+  </g>
+
+  <!-- ═══ DEPTH FOG OVERLAY ═══ -->
+  <rect width="1080" height="600" fill="url(#sky)" opacity="0.08"/>
+  <!-- Bottom ground fog -->
+  <rect x="0" y="1700" width="1080" height="220" fill="#c040b0" opacity="0.25"/>
+
+  <!-- ═══ LIGHT RAYS FROM MOON ═══ -->
+  <g opacity="0.06" fill="white">
+    <polygon points="480,340 540,260 600,340 590,1920 490,1920"/>
+    <polygon points="460,310 540,260 540,310 510,1920 470,1920"/>
+    <polygon points="540,260 620,310 580,1920 540,310"/>
+  </g>
+
+  <!-- ═══ VIGNETTE ═══ -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="0%"  stop-color="transparent"/>
+    <stop offset="100%" stop-color="#00000066"/>
+  </radialGradient>
+  <rect width="1080" height="1920" fill="url(#vignette)"/>
+</svg>
