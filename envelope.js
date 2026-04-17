@@ -1,82 +1,82 @@
-/* envelope.js — Wax seal interaction & music unlock */
+/* envelope.js — Fixed touch target + music unlock */
 (function () {
 
   const overlay  = document.getElementById('envOverlay');
-  const seal     = document.getElementById('waxSeal');
   const envelope = document.getElementById('envelope');
   const audio    = document.getElementById('bgMusic');
 
-  if (!overlay || !seal) return;
+  if (!overlay || !envelope) return;
+
+  let opened = false;
 
   function burstHearts(cx, cy) {
     const items = ['💕','✨','🌸','⭐','🎀','💫','🎊','💖'];
-    for (let i = 0; i < 18; i++) {
+    for (let i = 0; i < 16; i++) {
       const el = document.createElement('div');
       el.className = 'burst-heart';
-      const angle = (i / 18) * Math.PI * 2;
-      const dist  = 60 + Math.random() * 120;
-      const tx    = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist - 60}px)`;
-      const rot   = (Math.random() - .5) * 120 + 'deg';
-      el.style.cssText = `
-        left:${cx - 12}px; top:${cy - 12}px;
-        --tx:${tx}; --rot:${rot};
-        animation-duration:${.8 + Math.random() * .6}s;
-        animation-delay:${Math.random() * .15}s;
-      `;
+      const angle = (i / 16) * Math.PI * 2;
+      const dist  = 55 + Math.random() * 100;
+      const tx    = 'translate(' + (Math.cos(angle)*dist) + 'px, ' + (Math.sin(angle)*dist - 55) + 'px)';
+      const rot   = ((Math.random() - .5) * 120) + 'deg';
+      el.style.cssText =
+        'left:' + (cx-12) + 'px; top:' + (cy-12) + 'px;' +
+        '--tx:' + tx + '; --rot:' + rot + ';' +
+        'animation-duration:' + (.8 + Math.random()*.5) + 's;' +
+        'animation-delay:' + (Math.random()*.1) + 's;';
       el.textContent = items[Math.floor(Math.random() * items.length)];
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1600);
+      setTimeout(function(){ el.remove(); }, 1500);
     }
   }
 
   function openEnvelope(e) {
-    // Get tap/click position for heart burst
-    const cx = e.touches ? e.touches[0].clientX : e.clientX;
-    const cy = e.touches ? e.touches[0].clientY : e.clientY;
+    if (opened) return;
+    opened = true;
 
-    // Burst hearts
-    burstHearts(cx, cy);
+    e.preventDefault();
+    e.stopPropagation();
 
-    // Haptic
-    if (navigator.vibrate) navigator.vibrate([30, 20, 30]);
-
-    // Start music — THIS IS THE USER GESTURE so it works on all browsers!
-    if (audio) {
-      audio.volume = 0;
-      audio.play().then(() => {
-        // Fade in music gently
-        let vol = 0;
-        const fade = setInterval(() => {
-          vol = Math.min(vol + .04, .45);
-          audio.volume = vol;
-          if (vol >= .45) clearInterval(fade);
-        }, 80);
-      }).catch(() => {});
+    var cx, cy;
+    if (e.changedTouches && e.changedTouches.length) {
+      cx = e.changedTouches[0].clientX;
+      cy = e.changedTouches[0].clientY;
+    } else {
+      cx = e.clientX || window.innerWidth / 2;
+      cy = e.clientY || window.innerHeight / 2;
     }
 
-    // Trigger opening animation
+    burstHearts(cx, cy);
+    if (navigator.vibrate) navigator.vibrate([30, 20, 30]);
+
+    // Play music synchronously inside touch event handler
+    if (audio) {
+      audio.volume = 0.45;
+      audio.play().then(function() {
+        audio.volume = 0;
+        var vol = 0;
+        var fade = setInterval(function() {
+          vol = Math.min(vol + 0.03, 0.45);
+          audio.volume = vol;
+          if (vol >= 0.45) clearInterval(fade);
+        }, 60);
+      }).catch(function() {
+        audio.volume = 0.45;
+      });
+    }
+
     overlay.classList.add('opening');
-
-    // After animation, hide overlay
-    setTimeout(() => {
+    setTimeout(function() {
       overlay.classList.add('gone');
-      setTimeout(() => {
+      setTimeout(function() {
         overlay.style.display = 'none';
-        // Update music button state
-        const ico = document.getElementById('musicIcon');
+        var ico = document.getElementById('musicIcon');
         if (ico) ico.textContent = '🎵';
-      }, 700);
-    }, 820);
-
-    seal.removeEventListener('click',      openEnvelope);
-    seal.removeEventListener('touchstart', openEnvelope);
-    envelope.removeEventListener('click',      openEnvelope);
-    envelope.removeEventListener('touchstart', openEnvelope);
+      }, 650);
+    }, 800);
   }
 
-  seal.addEventListener('click',      openEnvelope);
-  seal.addEventListener('touchstart', openEnvelope, { passive: true });
-  envelope.addEventListener('click',      openEnvelope);
-  envelope.addEventListener('touchstart', openEnvelope, { passive: true });
+  // Use touchend (not touchstart) — more reliable for audio on mobile
+  envelope.addEventListener('touchend', openEnvelope, { passive: false });
+  envelope.addEventListener('click',    openEnvelope, false);
 
 })();

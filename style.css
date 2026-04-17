@@ -696,3 +696,51 @@ html, body {
   border-bottom: 2px solid rgba(255,110,180,.4);
   transform: rotate(-45deg);
 }
+
+/* ═══════════════════════════════════════════
+   ANDROID PERFORMANCE FIXES
+═══════════════════════════════════════════ */
+
+/* GPU layers for smooth transitions */
+#scene, .book, .bcover, .bpage {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Remove expensive backdrop-filter on Android/mobile
+   (biggest source of lag on low-end phones) */
+@media (max-width: 768px) {
+  #musicBtn {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(100, 30, 80, 0.75);
+  }
+  .hero-eyebrow {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(80, 20, 60, 0.7);
+  }
+  /* Simplify book shadow on mobile */
+  .book {
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,.5));
+  }
+  /* Reduce canvas rain opacity for perf */
+  #candyRain { opacity: 0.6; }
+  /* Disable lens flares on mobile */
+  .flare { display: none; }
+  /* Simpler page transition on mobile */
+  .bpage {
+    transition: opacity .35s ease, transform .75s cubic-bezier(.645,.045,.355,1);
+  }
+  .bcover {
+    transition: transform .75s cubic-bezier(.645,.045,.355,1);
+  }
+  .book {
+    transition: transform .7s cubic-bezier(.77,0,.175,1);
+  }
+  #scene {
+    transition: transform .65s cubic-bezier(.77,0,.175,1);
+  }
+}
