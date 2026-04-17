@@ -1,0 +1,209 @@
+/* envelope.css — Gorgeous wax-seal envelope overlay */
+
+/* ── OVERLAY ───────────────────────────────────────────── */
+#envOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%,
+    #2a0845 0%, #160330 40%, #06001a 100%);
+}
+
+/* Stars behind envelope */
+#envOverlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8%  12%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 22% 8%,  rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 18%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 55% 6%,  rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 14%, rgba(255,255,255,.7) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 84% 9%,  rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 92% 22%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 30%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 48% 26%, rgba(255,255,255,.5) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 77% 28%, rgba(255,255,255,.6) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 5%  45%, rgba(255,255,255,.4) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 95% 40%, rgba(255,255,255,.4) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* floating petals */
+#envOverlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 30% 75%, rgba(255,110,180,.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 65% 80%, rgba(192,132,252,.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 50% 90%, rgba(255,224,102,.3) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ── ENVELOPE WRAP ─────────────────────────────────────── */
+#envWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  animation: envEntrance 1.2s cubic-bezier(.16,1,.3,1) both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
+}
+@keyframes envEntrance {
+  from { opacity:0; transform: translateY(40px) scale(.9); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Top text */
+#envTop {
+  text-align: center;
+  animation: envEntrance 1.2s .2s cubic-bezier(.16,1,.3,1) both;
+}
+#envTop p {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  color: rgba(255,255,255,.65);
+  letter-spacing: 1px;
+}
+#envTop strong {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.4rem, 5.5vw, 2.2rem);
+  background: linear-gradient(135deg, #ff9fe8, #ffe066, #6ee7c4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
+  margin-top: 4px;
+  filter: drop-shadow(0 2px 12px rgba(255,110,180,.5));
+}
+
+/* ── THE ENVELOPE ──────────────────────────────────────── */
+#envelope {
+  position: relative;
+  width: min(82vw, 360px);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  filter: drop-shadow(0 20px 60px rgba(255,45,150,.35))
+          drop-shadow(0 6px 20px rgba(0,0,0,.5));
+  transition: transform .3s ease, filter .3s ease;
+  will-change: transform;
+  transform: translateZ(0);
+}
+#envelope:active { transform: scale(.97); }
+#envelope:hover  {
+  filter: drop-shadow(0 24px 70px rgba(255,45,150,.5))
+          drop-shadow(0 6px 20px rgba(0,0,0,.4));
+}
+
+/* Envelope body SVG — aspect ratio trick */
+#envBody {
+  width: 100%;
+  display: block;
+}
+
+/* ── WAX SEAL (absolute over SVG) ─────────────────────── */
+#waxSeal {
+  position: absolute;
+  /* Centered on envelope flap junction */
+  left: 50%; top: 48%;
+  transform: translate(-50%, -50%) translateZ(0);
+  width: min(22vw, 88px);
+  height: min(22vw, 88px);
+  cursor: pointer;
+  animation: sealPulse 2.5s ease-in-out infinite;
+  transition: transform .25s ease;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+#waxSeal:active { transform: translate(-50%,-50%) scale(.9) translateZ(0); }
+
+@keyframes sealPulse {
+  0%,100% { filter: drop-shadow(0 0 8px rgba(220,60,60,.6)); }
+  50%      { filter: drop-shadow(0 0 22px rgba(255,100,80,.9)) drop-shadow(0 0 40px rgba(255,80,80,.4)); }
+}
+
+/* ── HINT TEXT ─────────────────────────────────────────── */
+#sealHint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: hintBounce 2s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+@keyframes hintBounce {
+  0%,100% { transform: translateY(0); opacity: .8; }
+  50%      { transform: translateY(6px); opacity: 1; }
+}
+#sealHint span {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(.75rem, 3vw, .95rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+}
+.hint-arrows {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.hint-arrows i {
+  display: block;
+  width: 10px; height: 10px;
+  border-right: 2px solid rgba(255,180,180,.7);
+  border-bottom: 2px solid rgba(255,180,180,.7);
+  transform: rotate(45deg);
+}
+.hint-arrows i:nth-child(1) { opacity: .35; }
+.hint-arrows i:nth-child(2) { opacity: .6; }
+.hint-arrows i:nth-child(3) { opacity: .9; }
+
+/* ── OPEN ANIMATION ────────────────────────────────────── */
+#envOverlay.opening #envelope {
+  animation: envOpen .9s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes envOpen {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.06) rotate(-1deg); }
+  60%  { transform: scale(.95) translateY(10px); }
+  100% { transform: scale(.4) translateY(-60px); opacity: 0; }
+}
+#envOverlay.opening #envTop,
+#envOverlay.opening #sealHint {
+  animation: fadeUp .5s ease forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* ── DISMISS ───────────────────────────────────────────── */
+#envOverlay.gone {
+  animation: overlayFade .6s .3s ease forwards;
+  pointer-events: none;
+}
+@keyframes overlayFade {
+  to { opacity: 0; transform: scale(1.04); }
+}
+
+/* floating hearts that burst on seal click */
+.burst-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99998;
+  font-size: 1.4rem;
+  animation: heartBurst linear forwards;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+@keyframes heartBurst {
+  0%   { opacity: 1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: var(--tx) scale(.3) rotate(var(--rot)); }
+}

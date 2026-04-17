@@ -3,118 +3,323 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="theme-color" content="#1a0a2e"/>
+  <meta name="theme-color" content="#04001a"/>
   <title>Happy Birthday Guddu 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="envelope.css"/>
 </head>
 <body>
 
-  <audio id="bgMusic" loop autoplay muted><source src="music.mp3" type="audio/mpeg"/></audio>
-  <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">🎵</button>
+  <audio id="bgMusic" loop playsinline><source src="music.mp3" type="audio/mpeg"/></audio>
 
-  <!-- Progress dots -->
-  <div id="progressDots">
-    <span class="dot active" data-step="0"></span>
-    <span class="dot" data-step="1"></span>
-    <span class="dot" data-step="2"></span>
-    <span class="dot" data-step="3"></span>
-    <span class="dot" data-step="4"></span>
+  <!-- ═══════════════════════════════════════
+       ENVELOPE OVERLAY (shown first)
+  ═══════════════════════════════════════ -->
+  <div id="envOverlay">
+    <div id="envWrap">
+
+      <div id="envTop">
+        <p>A special delivery for</p>
+        <strong>Guddu 🎂</strong>
+      </div>
+
+      <!-- Envelope SVG -->
+      <div id="envelope">
+        <svg id="envBody" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="envGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#fff0f8"/>
+              <stop offset="100%" stop-color="#ffe0f0"/>
+            </linearGradient>
+            <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#ffccee"/>
+              <stop offset="100%" stop-color="#ffaade"/>
+            </linearGradient>
+            <linearGradient id="sideL" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="#ffd6f0"/>
+              <stop offset="100%" stop-color="#ffbbdd"/>
+            </linearGradient>
+            <linearGradient id="sideR" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#ffd6f0"/>
+              <stop offset="100%" stop-color="#ffbbdd"/>
+            </linearGradient>
+            <filter id="envShadow">
+              <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(200,50,120,.25)"/>
+            </filter>
+          </defs>
+
+          <!-- Envelope body -->
+          <rect x="0" y="0" width="360" height="240" rx="12" fill="url(#envGrad)" filter="url(#envShadow)"/>
+          <rect x="0" y="0" width="360" height="240" rx="12" fill="none" stroke="#ffaacc" stroke-width="2"/>
+
+          <!-- Bottom triangle flap -->
+          <polygon points="0,240 180,130 360,240" fill="#ffc8e8" opacity="0.6"/>
+
+          <!-- Left triangle -->
+          <polygon points="0,0 0,240 160,130" fill="url(#sideL)" opacity="0.55"/>
+          <!-- Right triangle -->
+          <polygon points="360,0 360,240 200,130" fill="url(#sideR)" opacity="0.55"/>
+
+          <!-- Top flap (closed) -->
+          <polygon points="0,0 360,0 180,118" fill="url(#flapGrad)"/>
+          <polygon points="0,0 360,0 180,118" fill="none" stroke="#ff99cc" stroke-width="1.5" stroke-linejoin="round"/>
+
+          <!-- Envelope inner shadow line -->
+          <line x1="0" y1="0" x2="160" y2="130" stroke="#ffaacc" stroke-width="1" opacity="0.5"/>
+          <line x1="360" y1="0" x2="200" y2="130" stroke="#ffaacc" stroke-width="1" opacity="0.5"/>
+
+          <!-- Decorative hearts on envelope -->
+          <text x="60"  y="180" font-size="18" opacity="0.4" text-anchor="middle">💕</text>
+          <text x="300" y="180" font-size="18" opacity="0.4" text-anchor="middle">💕</text>
+          <text x="60"  y="60"  font-size="14" opacity="0.35" text-anchor="middle">✨</text>
+          <text x="300" y="60"  font-size="14" opacity="0.35" text-anchor="middle">✨</text>
+
+          <!-- Address lines -->
+          <rect x="110" y="148" width="140" height="3" rx="1.5" fill="#ffaacc" opacity="0.5"/>
+          <rect x="125" y="158" width="110" height="3" rx="1.5" fill="#ffaacc" opacity="0.4"/>
+          <rect x="140" y="168" width="80"  height="3" rx="1.5" fill="#ffaacc" opacity="0.3"/>
+
+          <!-- Postage stamp top right -->
+          <rect x="298" y="12" width="46" height="38" rx="3" fill="white" stroke="#ffaacc" stroke-width="1.5"
+                stroke-dasharray="4,2"/>
+          <text x="321" y="36" font-size="20" text-anchor="middle">🎂</text>
+        </svg>
+
+        <!-- Wax seal (SVG circle on top) -->
+        <svg id="waxSeal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sealGrad" cx="38%" cy="32%" r="65%">
+              <stop offset="0%"   stop-color="#ff8866"/>
+              <stop offset="40%"  stop-color="#dd2222"/>
+              <stop offset="100%" stop-color="#880000"/>
+            </radialGradient>
+            <filter id="sealGlow">
+              <feGaussianBlur stdDeviation="3" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Outer ring -->
+          <circle cx="50" cy="50" r="48" fill="#aa1111" opacity="0.4"/>
+          <!-- Main seal -->
+          <circle cx="50" cy="50" r="43" fill="url(#sealGrad)" filter="url(#sealGlow)"/>
+          <!-- Seal ring detail -->
+          <circle cx="50" cy="50" r="43" fill="none" stroke="rgba(255,180,160,.5)" stroke-width="2"/>
+          <circle cx="50" cy="50" r="37" fill="none" stroke="rgba(255,180,160,.35)" stroke-width="1.5"/>
+          <!-- Star burst pattern -->
+          <g stroke="rgba(255,200,180,.45)" stroke-width="1.2" opacity="0.8">
+            <line x1="50" y1="13" x2="50" y2="87"/>
+            <line x1="13" y1="50" x2="87" y2="50"/>
+            <line x1="24" y1="24" x2="76" y2="76"/>
+            <line x1="76" y1="24" x2="24" y2="76"/>
+            <line x1="18" y1="38" x2="82" y2="62"/>
+            <line x1="38" y1="18" x2="62" y2="82"/>
+            <line x1="82" y1="38" x2="18" y2="62"/>
+            <line x1="62" y1="18" x2="38" y2="82"/>
+          </g>
+          <!-- Center monogram -->
+          <circle cx="50" cy="50" r="20" fill="#cc1111" opacity="0.6"/>
+          <text x="50" y="56" font-size="20" text-anchor="middle" fill="rgba(255,230,220,.9)" font-family="serif" font-weight="bold">G</text>
+          <!-- Shine highlight -->
+          <ellipse cx="38" cy="36" rx="10" ry="7" fill="rgba(255,255,255,.25)" transform="rotate(-30,38,36)"/>
+        </svg>
+      </div>
+
+      <div id="sealHint">
+        <span>Tap the seal to open</span>
+        <div class="hint-arrows"><i></i><i></i><i></i></div>
+      </div>
+
+    </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       FIXED BACKGROUND (never moves)
-  ══════════════════════════════════════ -->
-  <div id="bgFixed">
-    <img src="bg.svg" id="bgImg" alt="Candy World"/>
-    <canvas id="candyCanvas"></canvas>
-    <!-- Candy rain -->
+  <!-- ═══════════════════════════════════════
+       MAIN WEBSITE (behind envelope)
+  ═══════════════════════════════════════ -->
+
+  <!-- Music btn -->
+  <button id="musicBtn" onclick="toggleMusic()" aria-label="Toggle music">
+    <span id="musicIcon">🎵</span>
+  </button>
+
+  <!-- Nav dots -->
+  <nav id="navDots" aria-label="Navigation">
+    <button class="ndot active" data-step="0"></button>
+    <button class="ndot" data-step="1"></button>
+    <button class="ndot" data-step="2"></button>
+    <button class="ndot" data-step="3"></button>
+    <button class="ndot" data-step="4"></button>
+  </nav>
+
+  <div id="stepLabel">1 / 5</div>
+
+  <!-- Fixed background -->
+  <div id="bgWrap">
+    <img id="bgSvg" src="bg.svg" alt=""/>
+    <canvas id="glowCanvas"></canvas>
+    <div id="particles"></div>
     <div id="candyRain"></div>
+    <div class="flare f1"></div>
+    <div class="flare f2"></div>
+    <div class="flare f3"></div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCENE — this is what moves UP/DOWN
-       instead of the browser scrolling
-  ══════════════════════════════════════ -->
+  <!-- Scene -->
   <div id="scene">
 
     <!-- SLIDE 0: HERO -->
-    <div class="slide" id="slide0">
-      <div class="hero-content">
-        <span class="hero-sub">✨ A Special Surprise ✨</span>
-        <h1 class="birthday-title">
-          <span class="line1">Happy Birthday</span>
-          <span class="line2">Guddu</span>
-        </h1>
-        <div class="age-badge"><span class="age-num">2</span><span class="age-word">Today!</span></div>
-        <p class="scroll-hint"><span>🎁</span> Scroll for a surprise <span class="arr">↓</span></p>
+    <div class="slide" id="s0">
+      <div class="hero-wrap">
+        <div class="emoji-orbit">
+          <span class="orb o1">🍭</span><span class="orb o2">⭐</span>
+          <span class="orb o3">🎀</span><span class="orb o4">🍬</span>
+          <span class="orb o5">✨</span><span class="orb o6">🎊</span>
+        </div>
+        <div class="hero-card">
+          <div class="hero-glow-ring"></div>
+          <p class="hero-eyebrow">✨ A Little Gift From Mamu ✨</p>
+          <h1 class="hero-name">
+            <span class="name-line1">Happy Birthday</span>
+            <span class="name-guddu">Guddu</span>
+          </h1>
+          <div class="hero-age">
+            <span class="age-n">2</span>
+            <div class="age-side">
+              <span class="age-years">Years</span>
+              <span class="age-old">Old! 🎂</span>
+            </div>
+          </div>
+          <p class="hero-date">April 19 · 2026</p>
+        </div>
+        <div class="scroll-cue">
+          <div class="cue-line"></div>
+          <span class="cue-text">Scroll</span>
+          <div class="cue-arrow"><span></span><span></span><span></span></div>
+        </div>
       </div>
     </div>
 
-    <!-- SLIDE 1: Book closed + rising -->
-    <div class="slide" id="slide1">
+    <!-- SLIDE 1: BOOK -->
+    <div class="slide" id="s1">
       <div class="book-stage">
         <div class="book" id="theBook">
-          <div class="book-spine"></div>
-          <div class="book-back"></div>
+          <div class="bspine"></div>
+          <div class="bback"></div>
 
-          <!-- Pages (hidden behind cover) -->
-          <div class="book-page" id="page1">
-            <div class="pg-inner">
-              <div class="pg-head"><span class="pg-emoji">👶</span><h2>The Day You Arrived</h2><p class="pg-date">April 19, 2024 🌸</p></div>
-              <div class="photo-grid">
-                <div class="photo-frame tilt-l"><img src="photos/birth1.jpg" alt="" onerror="this.src=''/><span class="plabel">First breath 💕</span></div>
-                <div class="photo-frame tilt-r mt"><img src="photos/birth2.jpg" alt="" onerror="this.src=''"/><span class="plabel">So tiny 🌸</span></div>
-                <div class="photo-frame tilt-l"><img src="photos/birth3.jpg" alt="" onerror="this.src=''"/><span class="plabel">Pure love 🥰</span></div>
+          <!-- PAGE 1: Birth -->
+          <div class="bpage" id="pg1">
+            <div class="pscroll">
+              <div class="pg-deco-top"></div>
+              <div class="phead">
+                <span class="pemoji">👶</span>
+                <h2>The Day You Arrived</h2>
+                <p class="pdate">April 19, 2024 · A Miracle Was Born</p>
               </div>
-              <div class="msg-box">
-                <p>The moment you came into this world, Guddu, everything changed. The universe smiled a little brighter, and our hearts grew a little bigger. You were the tiniest miracle — with the loudest cry and the softest cheeks. Even though Mamu couldn't hold you that day, <strong class="hl-pink">every heartbeat of mine was celebrating you.</strong> 💖</p>
+              <div class="pgrid">
+                <div class="pframe tl">
+                  <img src="photos/birth1.jpg" alt="Birth photo" onerror="this.style.display='none'"/>
+                  <span class="plab">First breath 💕</span>
+                </div>
+                <div class="pframe tr mt12">
+                  <img src="photos/birth2.jpg" alt="Birth photo" onerror="this.style.display='none'"/>
+                  <span class="plab">So tiny 🌸</span>
+                </div>
+                <div class="pframe tl">
+                  <img src="photos/birth3.jpg" alt="Birth photo" onerror="this.style.display='none'"/>
+                  <span class="plab">Pure love 🥰</span>
+                </div>
+              </div>
+              <div class="pmsg">
+                <p>The moment you came into this world, Guddu, everything changed. The universe smiled a little brighter, and our hearts grew a little bigger. You were the tiniest miracle — with the loudest cry and the softest cheeks. Even though Mamu couldn't hold you that day, <strong class="hlp">every heartbeat of mine was celebrating you.</strong> 💖</p>
+              </div>
+              <div class="pg-footer">
+                <span class="pg-num">Page 1 of 3</span>
+                <span class="pg-turn">Scroll ➜</span>
               </div>
             </div>
           </div>
 
-          <div class="book-page" id="page2">
-            <div class="pg-inner">
-              <div class="pg-head"><span class="pg-emoji">🎂</span><h2>Your First Birthday</h2><p class="pg-date">April 19, 2025 🎊</p></div>
-              <div class="photo-grid">
-                <div class="photo-frame tilt-r"><img src="photos/bday1_1.jpg" alt="" onerror="this.src=''"/><span class="plabel">Cake time! 🎂</span></div>
-                <div class="photo-frame tilt-l mt"><img src="photos/bday1_2.jpg" alt="" onerror="this.src=''"/><span class="plabel">My little star ⭐</span></div>
-                <div class="photo-frame tilt-r"><img src="photos/bday1_3.jpg" alt="" onerror="this.src=''"/><span class="plabel">Growing up 🌻</span></div>
+          <!-- PAGE 2: 1st Birthday -->
+          <div class="bpage" id="pg2">
+            <div class="pscroll">
+              <div class="pg-deco-top pg-deco-mint"></div>
+              <div class="phead phead2">
+                <span class="pemoji">🎂</span>
+                <h2>Your First Birthday</h2>
+                <p class="pdate">April 19, 2025 · One Year of Joy</p>
               </div>
-              <div class="msg-box msg-mint">
-                <p>One whole year, Guddu! One year of your first giggles, your wobbly first steps, your tiny fingers discovering the whole world. Mamu watched every video, every photo, with tears of pure joy. Distance is just miles — but love has no distance. <strong class="hl-mint">You are the best thing that happened to our family. 🌈</strong> I hope that cake was as sweet as you are, my jaan.</p>
+              <div class="pgrid">
+                <div class="pframe tr">
+                  <img src="photos/bday1_1.jpg" alt="1st Birthday" onerror="this.style.display='none'"/>
+                  <span class="plab">Cake time! 🎂</span>
+                </div>
+                <div class="pframe tl mt12">
+                  <img src="photos/bday1_2.jpg" alt="1st Birthday" onerror="this.style.display='none'"/>
+                  <span class="plab">My little star ⭐</span>
+                </div>
+                <div class="pframe tr">
+                  <img src="photos/bday1_3.jpg" alt="1st Birthday" onerror="this.style.display='none'"/>
+                  <span class="plab">Growing up 🌻</span>
+                </div>
+              </div>
+              <div class="pmsg pmsg2">
+                <p>One whole year, Guddu! One year of your first giggles, your wobbly steps, your tiny fingers discovering the whole world. Mamu watched every video, every photo, with tears of pure joy. Distance is just miles — <strong class="hlm">but love has no distance. You are the best thing that happened to our family. 🌈</strong></p>
+              </div>
+              <div class="pg-footer">
+                <span class="pg-num">Page 2 of 3</span>
+                <span class="pg-turn">Scroll ➜</span>
               </div>
             </div>
           </div>
 
-          <div class="book-page page3" id="page3">
-            <div class="pg-inner">
-              <div class="confetti-zone" id="confettiZone"></div>
-              <div class="pg-head"><span class="pg-emoji spin-e">🎉</span><h2>Happy 2nd Birthday!</h2><p class="pg-date">April 19, 2026 — Today! 🎊</p></div>
-              <div class="wish-card">
-                <div class="wish-stars">⭐ ✨ 🌟 ✨ ⭐</div>
-                <p class="big-wish">TWO years of magic, laughter &amp; love!</p>
-                <p class="wish-body">Guddu, you are 2 today and already the most wonderful little human. Mamu couldn't be there in person, but <strong class="hl-gold">I am there in every smile you smile, every dream you dream.</strong> This little website is my hug to you from far away. 🤗</p>
-                <p class="wish-body">May your life be filled with candy clouds, endless laughter, and all the love in the world. You are my favourite person on this entire planet, little one.</p>
-                <div class="sign">— With all my love,<br/><span class="sign-name">Mamu 💛</span></div>
+          <!-- PAGE 3: 2nd Birthday -->
+          <div class="bpage pg3" id="pg3">
+            <div class="pscroll pscroll3">
+              <div id="cfZone"></div>
+              <div class="pg-deco-top pg-deco-gold"></div>
+              <div class="phead phead3">
+                <span class="pemoji spin-e">🎉</span>
+                <h2>Happy 2nd Birthday!</h2>
+                <p class="pdate">April 19, 2026 · Today Is Your Day! 🎊</p>
               </div>
-              <div class="cake-wrap">
-                <div class="cake-big">🎂</div>
-                <div class="candles">🕯️ 🕯️</div>
-                <p class="blow">Make a wish, Guddu! 🌟</p>
+              <div class="wcard">
+                <div class="wstars">⭐ ✨ 🌟 ✨ ⭐</div>
+                <p class="wbig">TWO years of magic, laughter &amp; love!</p>
+                <p class="wbody">Guddu, you are 2 today and already the most wonderful little human. Mamu couldn't be there in person, but <strong class="hlg">I am there in every smile you smile, every dream you dream.</strong> This little website is my hug to you from far away. 🤗</p>
+                <p class="wbody">May your life always be as sweet as candy, as bright as stars, and filled with all the love in the world. You are my favourite person on this entire planet. 🌈</p>
+                <div class="wsign">
+                  <span class="wsign-txt">— With all my love,</span>
+                  <span class="wsign-name">Mamu 💛</span>
+                </div>
+              </div>
+              <div class="cakesec">
+                <div class="cake">🎂</div>
+                <div class="cndls">🕯️&nbsp;🕯️</div>
+                <p class="blowt">Make a wish, Guddu! 🌟</p>
+              </div>
+              <div class="pg-footer">
+                <span class="pg-num">Page 3 of 3</span>
+                <span class="pg-turn">The End 💕</span>
               </div>
             </div>
           </div>
 
-          <!-- Front cover -->
-          <div class="book-cover" id="bookCover">
-            <div class="cover-inner">
-              <span class="cover-icon">📖</span>
+          <!-- Cover -->
+          <div class="bcover" id="bcover">
+            <div class="bcov-inner">
+              <div class="bcov-shine"></div>
+              <div class="bcov-pattern"></div>
+              <span class="bcov-icon">📖</span>
               <h3>A Little Book<br/>of Love</h3>
-              <p>For Guddu</p>
-              <p class="cover-age">Turning 2 💕</p>
+              <p class="bcov-for">For Guddu</p>
+              <p class="bcov-age">Turning 2 💕</p>
+              <div class="bcov-ribbon"></div>
+              <div class="bcov-bow">🎀</div>
             </div>
           </div>
+
         </div><!-- /book -->
       </div>
     </div>
@@ -124,5 +329,6 @@
   <script src="candy-world.js"></script>
   <script src="book.js"></script>
   <script src="main.js"></script>
+  <script src="envelope.js"></script>
 </body>
 </html>
