@@ -1,203 +1,175 @@
-/* candy-world.js — Performance-optimised for Android */
+/* candy-world.js — Aggressive mobile optimisation */
 (function () {
   var canvas = document.getElementById('glowCanvas');
   var ctx    = canvas.getContext('2d');
-  var isMobile = window.innerWidth < 768;
-  var EMOJIS = ['🍭','🍬','🧁','🍩','🍪','✨','🌟','🎊','🎀','💫','🌸'];
-  var W, H, animId, t = 0;
-  var orbs = [], shooters = [];
-  var nextShoot = 200;
+  var W, H, animId, t = 0, running = false;
+
+  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+                 || window.innerWidth < 768;
+
+  // On mobile: stop canvas entirely while envelope is showing
+  // Resume only after envelope is dismissed (window._envDone = true)
+  var envDone = !document.getElementById('envOverlay'); // if no overlay, start immediately
+
+  var EMOJIS = ['🍭','🍬','🍩','✨','🌟','🎊','🎀','💫'];
+  var orbs = [], stars = [];
 
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    isMobile = W < 768;
+    isMobile = W < 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
 
   function makeOrbs() {
     orbs = [];
-    // Fewer orbs on mobile
-    var n = isMobile ? Math.min(8, Math.floor(W/80)) : Math.min(18, Math.floor(W/52));
+    // Mobile: only 5 orbs, very slow movement
+    var n = isMobile ? 5 : 14;
     for (var i = 0; i < n; i++) {
-      var z = Math.random();
       orbs.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        z: z,
-        size: 10 + Math.random() * 20,
-        emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
-        vx: (Math.random()-.5) * .28,
-        vy: (Math.random()-.5) * .18,
+        z: Math.random(),
+        size: isMobile ? (12 + Math.random()*10) : (10 + Math.random()*20),
+        emoji: EMOJIS[Math.floor(Math.random()*EMOJIS.length)],
+        vx: (Math.random()-.5) * (isMobile ? .15 : .28),
+        vy: (Math.random()-.5) * (isMobile ? .10 : .18),
         spin: Math.random() * Math.PI * 2,
-        spinV: (Math.random()-.5) * .014,
-        wFreq: .012 + Math.random() * .018,
-        wAmp: .25 + Math.random() * .45,
+        spinV: (Math.random()-.5) * (isMobile ? .006 : .014),
+        wFreq: .008 + Math.random()*.012,
+        wAmp: .15 + Math.random()*.3,
         wOff: Math.random() * Math.PI * 2
       });
     }
   }
 
-  // Stars — pre-compute
-  var stars = [];
   function makeStars() {
     stars = [];
-    var n = isMobile ? 30 : 60;
+    var n = isMobile ? 18 : 55;
     for (var i = 0; i < n; i++) {
       stars.push({
         x: Math.random() * W,
-        y: Math.random() * H * .55,
-        r: .5 + Math.random() * 1.8,
+        y: Math.random() * H * .5,
+        r: .4 + Math.random() * 1.5,
         phase: Math.random() * Math.PI * 2,
-        speed: .003 + Math.random() * .007
+        speed: .002 + Math.random() * .006
       });
     }
   }
 
   function drawStars() {
+    // On mobile: batch all stars in one path, no save/restore per star
+    ctx.fillStyle = '#fffef0';
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
-      var a = .3 + .65 * Math.abs(Math.sin(t * s.speed + s.phase));
-      ctx.save();
+      var a = .25 + .6 * Math.abs(Math.sin(t * s.speed + s.phase));
       ctx.globalAlpha = a;
-      ctx.fillStyle = '#fffef0';
-      if (!isMobile) { ctx.shadowColor = '#ffe8c0'; ctx.shadowBlur = s.r * 4; }
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
     }
-  }
-
-  // Aurora — skip on mobile to save GPU
-  function drawAurora() {
-    if (isMobile) return;
-    var s = Math.sin(t * .0004), c = Math.cos(t * .0003);
-    var g = ctx.createLinearGradient(0, H*.15, W, H*.42);
-    g.addColorStop(0, 'rgba(0,255,200,' + (.05+.025*s) + ')');
-    g.addColorStop(.4, 'rgba(255,100,240,' + (.06+.025*c) + ')');
-    g.addColorStop(1, 'transparent');
-    ctx.save();
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.ellipse(W*.5+s*50, H*.27+c*18, W*.62, H*.11, s*.12, 0, Math.PI*2);
-    ctx.fill();
-    ctx.restore();
+    ctx.globalAlpha = 1;
   }
 
   function drawOrbs() {
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
     for (var i = 0; i < orbs.length; i++) {
       var p = orbs[i];
-      var depth = .35 + p.z * .65;
+      var depth = .4 + p.z * .6;
       var sz    = p.size * depth;
-      var alpha = .25 + p.z * .45;
+      var alpha = .22 + p.z * .4;
 
       p.x += p.vx * depth;
       p.y += p.vy * depth + Math.sin(t * p.wFreq + p.wOff) * p.wAmp;
       p.spin += p.spinV;
 
-      if (p.x < -60)    p.x = W + 60;
-      if (p.x > W+60)   p.x = -60;
-      if (p.y < -60)    p.y = H + 60;
-      if (p.y > H+60)   p.y = -60;
+      if (p.x < -50) p.x = W+50;
+      if (p.x > W+50) p.x = -50;
+      if (p.y < -50) p.y = H+50;
+      if (p.y > H+50) p.y = -50;
 
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.translate(p.x, p.y);
       ctx.rotate(p.spin);
-      if (!isMobile) { ctx.shadowColor = 'rgba(255,160,220,.6)'; ctx.shadowBlur = sz*.8; }
+      // No shadowBlur on mobile — kills GPU
       ctx.font = sz + 'px serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
       ctx.fillText(p.emoji, 0, 0);
       ctx.restore();
     }
   }
 
-  // Shooting stars — desktop only
-  function maybeShoot() {
-    if (isMobile) return;
-    if (t < nextShoot) return;
-    nextShoot = t + 200 + Math.random() * 300;
-    var ang = .3 + Math.random() * .5;
-    shooters.push({
-      x: Math.random() * W * .6,
-      y: Math.random() * H * .3,
-      vx: Math.cos(ang)*8, vy: Math.sin(ang)*8,
-      life: 48, max: 48
-    });
-  }
-  function drawShooters() {
-    for (var i = shooters.length-1; i >= 0; i--) {
-      var s = shooters[i];
-      s.x += s.vx; s.y += s.vy; s.life--;
-      if (s.life <= 0) { shooters.splice(i,1); continue; }
-      var a = s.life / s.max;
-      ctx.save();
-      ctx.globalAlpha = a * .85;
-      ctx.strokeStyle = '#fffef0';
-      ctx.lineWidth = 1.8;
-      ctx.shadowColor = '#ffe8a0'; ctx.shadowBlur = 10;
-      ctx.beginPath();
-      ctx.moveTo(s.x - s.vx*5, s.y - s.vy*5);
-      ctx.lineTo(s.x, s.y);
-      ctx.stroke();
-      ctx.restore();
-    }
-  }
+  // Mobile loop: ~20fps (every 3rd frame) — smooth but cheap
+  // Desktop loop: full 60fps
+  var fCount = 0;
+  var SKIP = isMobile ? 3 : 1;
 
-  // Ground glow — lighter on mobile
-  function drawGlow() {
-    var a = isMobile ? .05 : (.07 + .03 * Math.sin(t*.001));
-    var g = ctx.createLinearGradient(0, H*.78, 0, H);
-    g.addColorStop(0, 'transparent');
-    g.addColorStop(1, 'rgba(200,60,160,' + a + ')');
-    ctx.save(); ctx.fillStyle = g; ctx.fillRect(0, H*.78, W, H*.22); ctx.restore();
-  }
-
-  // Main loop — skip frames on mobile
-  var frameSkip = 0;
   function loop() {
     animId = requestAnimationFrame(loop);
-    // On mobile, run at ~30fps instead of 60fps
-    if (isMobile) {
-      frameSkip++;
-      if (frameSkip % 2 !== 0) return;
-    }
+
+    // Wait for envelope to close before starting on mobile
+    if (isMobile && !window._envDone) return;
+
+    fCount++;
+    if (fCount % SKIP !== 0) return;
+
     t++;
     ctx.clearRect(0, 0, W, H);
-    drawAurora();
+
+    if (!isMobile) {
+      // Desktop: aurora glow
+      var s = Math.sin(t*.0004), c = Math.cos(t*.0003);
+      var g = ctx.createLinearGradient(0, H*.15, W, H*.42);
+      g.addColorStop(0, 'rgba(0,255,200,'+ (.05+.02*s) +')');
+      g.addColorStop(.4, 'rgba(255,100,240,'+ (.06+.02*c) +')');
+      g.addColorStop(1, 'transparent');
+      ctx.save(); ctx.fillStyle=g;
+      ctx.beginPath();
+      ctx.ellipse(W*.5, H*.27, W*.6, H*.1, 0, 0, Math.PI*2);
+      ctx.fill(); ctx.restore();
+    }
+
     drawStars();
-    maybeShoot();
-    drawShooters();
     drawOrbs();
-    drawGlow();
+
+    // Subtle ground glow
+    if (!isMobile) {
+      var gg = ctx.createLinearGradient(0, H*.8, 0, H);
+      gg.addColorStop(0, 'transparent');
+      gg.addColorStop(1, 'rgba(200,60,160,.07)');
+      ctx.save(); ctx.fillStyle=gg; ctx.fillRect(0,H*.8,W,H*.2); ctx.restore();
+    }
   }
 
-  // Candy rain — fewer on mobile
   function initRain() {
     var c = document.getElementById('candyRain');
     if (!c) return;
-    var set = ['🍭','🍬','🎊','✨','🌟','🍩','🎀','💫','🌸'];
-    var count = isMobile ? 10 : 20;
+    var set = ['🍭','🍬','✨','🌟','🍩','🎀','💫'];
+    var count = isMobile ? 8 : 18;
     for (var i = 0; i < count; i++) {
       var el = document.createElement('div');
       el.className = 'candy-drop';
       el.textContent = set[Math.floor(Math.random()*set.length)];
-      el.style.left     = (Math.random()*100) + '%';
-      el.style.fontSize = (.8+Math.random()*.9) + 'rem';
-      el.style.opacity  = (.2+Math.random()*.35).toString();
-      el.style.animationDuration = (5+Math.random()*6) + 's';
-      el.style.animationDelay    = (Math.random()*8) + 's';
+      el.style.left   = (Math.random()*100) + '%';
+      el.style.fontSize = (.75+Math.random()*.8) + 'rem';
+      el.style.opacity  = (.15+Math.random()*.3).toString();
+      el.style.animationDuration = (6+Math.random()*7) + 's';
+      el.style.animationDelay    = (Math.random()*10) + 's';
       c.appendChild(el);
     }
   }
 
   window.addEventListener('resize', function() {
     cancelAnimationFrame(animId);
-    resize(); makeStars(); makeOrbs(); loop();
+    resize(); makeStars(); makeOrbs(); SKIP = isMobile ? 3 : 1; loop();
   });
 
   window.addEventListener('load', function() {
-    resize(); makeStars(); makeOrbs(); loop(); initRain();
+    resize(); makeStars(); makeOrbs();
+    SKIP = isMobile ? 3 : 1;
+    // Desktop: start immediately. Mobile: loop starts but skips frames until envDone
+    if (!isMobile) window._envDone = true;
+    loop();
+    initRain();
   });
 })();

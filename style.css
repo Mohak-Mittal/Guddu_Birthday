@@ -744,3 +744,60 @@ html, body {
     transition: transform .65s cubic-bezier(.77,0,.175,1);
   }
 }
+
+/* ═══════════════════════════════════════════
+   MOBILE ANIMATION KILL — biggest lag fix
+   Stops all non-essential CSS animations
+   on phones to free GPU for transitions
+═══════════════════════════════════════════ */
+@media (max-width: 768px), (pointer: coarse) {
+
+  /* Kill orbiting emojis — 6 rotating elements is too much */
+  .emoji-orbit { display: none; }
+
+  /* Kill nameShimmer filter animation — filter changes repaint every frame */
+  .name-guddu {
+    animation: none !important;
+    filter: drop-shadow(0 3px 20px rgba(255,110,180,.6)) !important;
+  }
+
+  /* Kill pulseRing */
+  .hero-glow-ring { animation: none !important; }
+
+  /* Kill pemoji wobble */
+  .pemoji { animation: none !important; }
+  .spin-e { animation: emojiSpin 4s linear infinite !important; }
+
+  /* Kill canvas rain filter */
+  .candy-drop { filter: none !important; }
+
+  /* Kill flares */
+  .flare { display: none !important; }
+
+  /* Kill backdrop-filter — single biggest GPU killer */
+  #musicBtn, .hero-eyebrow {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  #musicBtn    { background: rgba(80, 20, 70, 0.82) !important; }
+  .hero-eyebrow { background: rgba(60, 10, 55, 0.78) !important; }
+
+  /* Faster, simpler transitions on mobile */
+  #scene   { transition: transform .5s cubic-bezier(.4,0,.2,1) !important; }
+  .book    { transition: transform .6s cubic-bezier(.4,0,.2,1) !important; }
+  .bcover  { transition: transform .65s cubic-bezier(.4,0,.2,1) !important; }
+  .bpage   { transition: opacity .3s ease, transform .65s cubic-bezier(.4,0,.2,1) !important; }
+
+  /* Simpler book shadow */
+  .book {
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,.5)) !important;
+  }
+
+  /* No drop-shadow on text */
+  .name-guddu {
+    filter: none !important;
+  }
+
+  /* Reduce candy rain */
+  #candyRain { opacity: 0.5; }
+}
